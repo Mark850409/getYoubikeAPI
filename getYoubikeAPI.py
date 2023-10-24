@@ -258,10 +258,3 @@ getOpenData(
 )
 # 使用GMAIL寄信
 sendGmailwithattachment()
-
-
-# In[ ]:
-
-
-
-

@@ -62,6 +62,45 @@
 
 3. `logging_config.ini`，這個是每次執行程式都會有個`log紀錄`，這是`設定檔`，如果不確定怎麼改可以`google`，或是`先不動`用我的設定也可以。
 
+4. 撰寫`STORE PROCEDURE`，輸入以下程式碼
+
+```sql
+DELIMITER $$
+-- 如果PROCEDURE存在就先移除                                                                                                                                                                   
+DROP PROCEDURE IF EXISTS setYoubikeData $$       
+-- 建立PROCEDURE(傳入API參數，欄位數量要一致喔)                                                                                                                           
+CREATE PROCEDURE setYoubikeData(IN `sno` INT, IN `sna` VARCHAR(200), IN `tot` INT, IN `sbi` INT, IN `sarea` VARCHAR(50), IN `mday` VARCHAR(50), IN `lat` DOUBLE, IN `lng` DOUBLE, IN `ar` VARCHAR(200), IN `sareaen` VARCHAR(200), IN `snaen` VARCHAR(200), IN `aren` VARCHAR(200), IN `bemp` VARCHAR(200), IN `act` VARCHAR(50), IN `srcUpdateTime` VARCHAR(50), IN `updateTime` VARCHAR(50), IN `infoTime` VARCHAR(50), IN `infoDate` VARCHAR(50))  
+BEGIN
+-- 不存在的話建立getdata資料表() 
+CREATE TABLE IF NOT EXISTS getdata(  
+    sno INT,
+    sna char(200),
+    tot INT,
+    sbi INT,
+    sarea char(50),
+    mday char(50),
+    lat double,
+    lng double,
+    ar char(50),
+    sareaen char(200),
+    snaen char(200),
+    aren char(200),
+    bemp char(200),
+    act char(200),
+    srcUpdateTime char(200),
+    updateTime char(200),
+    infoTime char(200),
+    infoDate char(200)
+); 
+-- 將API的資料寫入getdata(傳入API參數，欄位數量要一致喔)
+INSERT INTO getdata VALUES(sno,sna,tot,sbi,sarea,mday,lat,lng,ar,sareaen,snaen,aren,bemp, act,srcUpdateTime,updateTime,infoTime,infoDate);
+END$$
+DELIMITER ;
+
+```
+
+5. 在`VSCODE`或是其他的`IDE`執行python即可。
+
 
 ## 三、執行結果
 
